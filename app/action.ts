@@ -1,12 +1,9 @@
 "use server";
 
-export const fetchPokemons = async (offset: number) => {
+import { IPokemonData } from "@/types/interfaces";
 
-const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=8&offset=${offset}`)
-
-    const data = await response.json()
-
-    console.log(data)
-
+export const fetchPokemons = async (offset: number): Promise<IPokemonData> => {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=8&offset=${offset}`);
+    const data: IPokemonData = await response.json();
     return data;
 }
