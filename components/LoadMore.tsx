@@ -7,7 +7,7 @@ import { useInView } from "react-intersection-observer";
 import PokemonCard from "./PokemonCard";
 import { IPokemon } from "@/types/interfaces";
 
-let page = 2;
+let page = 1;
 function LoadMore() {
     const { ref, inView } = useInView();
     const [data, setData] = useState<IPokemon[]>([]);
