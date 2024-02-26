@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { fetchPokemons } from './action';
 
 async function Home() {
-  const data = await fetchPokemons(20);
+  const data = await fetchPokemons(4);
 
   return (
     <main className="sm:p-16 py-16 px-8 flex flex-col gap-10">

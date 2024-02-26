@@ -5,7 +5,9 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
-let page = 2;
+let page = 1; // Start from the first page
+const limit = 4; // Define the limit for each page
+
 export type PokemonCard = JSX.Element;
 
 function LoadMore() {
@@ -13,8 +15,8 @@ function LoadMore() {
     const [data, setData] = useState<PokemonCard[]>([]);
     useEffect(() => {
         if (inView) {
-            fetchPokemons(page).then((response) => {
-                setData([...data, ...response]); 
+            fetchPokemons(limit, page * limit).then((response) => {
+                setData((prevData) => [...prevData, ...response]); 
                 page++;
             });
         }
