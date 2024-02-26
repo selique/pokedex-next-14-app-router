@@ -1,10 +1,15 @@
-'use client'
-import React, { useEffect, useState, Suspense } from 'react';
-import { IPokemonCardProp } from '@/types/interfaces';
-import { motion } from "framer-motion"
+"use client"
 import LazyPokemonImage from '@/components/LazyPokemonImage';
+import { IPokemonCardProp } from '@/types/interfaces';
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { Suspense, useEffect, useState } from 'react';
+interface PokemonCardProps {
+  pokemonUrl: string;
+  index: number;
+}
 
-function PokemonCard({ pokemonUrl }: { pokemonUrl: string }) {
+function PokemonCard({ pokemonUrl, index }: PokemonCardProps) {
   const [pokemonData, setPokemonData] = useState<IPokemonCardProp | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -17,7 +22,7 @@ function PokemonCard({ pokemonUrl }: { pokemonUrl: string }) {
       } catch (error) {
         console.error("Error fetching Pokemon data:", error);
       } finally {
-        setIsLoading(false); // Set loading to false regardless of success or failure
+        setIsLoading(false);
       }
     };
 
@@ -25,7 +30,15 @@ function PokemonCard({ pokemonUrl }: { pokemonUrl: string }) {
   }, [pokemonUrl]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className=''>
+       <Image
+              src="./spinner.svg"
+              alt="spinner"
+              width={56}
+              height={56}
+              className="object-contain"
+          />;
+    </div>
   }
 
   if (!pokemonData) {
@@ -48,12 +61,12 @@ function PokemonCard({ pokemonUrl }: { pokemonUrl: string }) {
       initial="hidden"
       animate="visible"
       transition={{
-        delay: 1,
+        delay: index * 0.25,
         ease: "easeInOut",
         duration: 0.5
       }}
       viewport={{ amount: 0 }}
-      className="max-w-sm rounded relative w-full"
+      className="max-w-sm rounded-xl relative w-full bg-white"
     >
       <Suspense fallback={<div>Loading...</div>}>
         <div className="relative w-full h-[37vh]">
@@ -73,35 +86,6 @@ function PokemonCard({ pokemonUrl }: { pokemonUrl: string }) {
               {pokemonData.types.map((type, index) => (
                 <span key={index}>{type.type.name}</span>
               ))}
-            </p>
-          </div>
-        </div>
-        <div className="flex gap-4 items-center">
-          <div className="flex flex-row gap-2 items-center">
-            <p className="text-base text-white font-bold">
-              Base Experience: {pokemonData.base_experience}
-            </p>
-            <p className="text-base text-white font-bold">
-              Height: {pokemonData.height}
-            </p>
-            <p className="text-base text-white font-bold">
-              Weight: {pokemonData.weight}
-            </p>
-          </div>
-          <div className="flex flex-row gap-2 items-center">
-            <p className="text-base text-white font-bold">
-              Ability: {pokemonData.abilities[0].ability.name}
-            </p>
-            <p className="text-base text-white font-bold">
-              Held Item: {pokemonData.held_items[0].item.name}
-            </p>
-          </div>
-          <div className="flex flex-row gap-2 items-center">
-            <p className="text-base text-white font-bold">
-              Move: {pokemonData.moves[0].move.name}
-            </p>
-            <p className="text-base text-white font-bold">
-              Location Area Encounters: {pokemonData.location_area_encounters}
             </p>
           </div>
         </div>
