@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest): Promise<NextResponse> {
+export async function POST(req: NextRequest) {
     const body = await req.body;
     
     if (!body) {
         return new NextResponse("Missing request body", {
-        status: 400,
+            status: 400,
         });
     }
 
