@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from 'next/link';
 
 function Hero() {
   return (
@@ -14,6 +15,9 @@ function Hero() {
         <h1 className="sm:text-6xl text-5xl text-white lg:max-w-lg font-bold leading-[120%]">
           Explore The <span className="red-gradient">Pokemons</span> of
         </h1>
+        <div className="flex justify-center mt-8">
+          <Link href="/contact" className="bg-red-gradient text-white px-6 py-3 rounded-lg text-xl font-semibold hover:bg-red-700 transition-colors duration-300">Contact Us</Link>
+        </div>
       </div>
       <div className="lg:flex-1 relative w-full h-[50vh] justify-center">
         <Image src="/anime.png" alt="anime" fill className="object-contain" />
